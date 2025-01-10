@@ -19,9 +19,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy the rest of your application code
 COPY . /app/
 
-# EXPOSE command is optional for documentation. 
 
 EXPOSE 8000
-# Alternatively, if you want to run FastAPI by default with uvicorn, 
-# comment out the line above and uncomment the line below:
 CMD ["python", "main.py"]
