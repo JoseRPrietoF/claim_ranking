@@ -1,7 +1,7 @@
 ipython==8.12.3
 ipywidgets==8.1.5
 matplotlib==3.10.0
-numpy==2.2.0
+numpy
 pandas==2.2.3
 peft==0.14.0
 scikit_learn==1.6.0
@@ -9,3 +9,15 @@ sentence_transformers==3.3.1
 torch==2.5.1
 tqdm==4.67.1
 transformers==4.47.0
+fastapi==0.115.6
+uvicorn
+lancedb
+streamlit
+requests
+langchain-community==0.3.12
+langchain-core==0.3.25
+langchain-openai==0.2.12
+langchain-text-splitters==0.3.3
+pydantic==2.10.3
+pydantic-settings==2.7.0
+pydantic_core==2.27.1

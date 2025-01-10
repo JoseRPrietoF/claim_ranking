@@ -136,7 +136,103 @@ Overall Accuracy:
 - **Hugging Face Transformers**
 
 ---
+---
+---
+
+# Claim Classification and Ranking System without notebook, creating an API and using streamlit (Updated)
+
+This repository contains a complete pipeline for processing unreviewed claims, identifying the most relevant reviewed claims, and classifying their similarity using both local and OpenAI-based models. The system integrates a modern architecture, including vector databases, large language models (LLMs), and a user-friendly interface.
+
+<img src="report/app.png" alt="Recall Formula" width="1000px">
+
+
+---
+
+## 🏛️ Architecture
+
+### Directory Structure
+```
+app/
+  api.py         # FastAPI application for the backend
+  interface.py   # Streamlit interface for user interaction
+
+docker/
+  api/           # Docker configuration for the API
+  docker_streamlit/  # Docker configuration for the Streamlit interface
+
+models/
+  model.py       # Local model implementation
+  model_openai.py # OpenAI-based model implementation
+
+vector_db/
+  db_handler.py  # Handles LanceDB operations
+```
+
+### Workflow
+1. **API**: Handles the inference logic and serves results via HTTP endpoints.
+2. **Streamlit Interface**: Allows users to input claims, select options, and view results interactively.
+3. **Vector Database**: LanceDB indexes reviewed claims and retrieves the most similar ones based on cosine similarity.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+Ensure you have Docker installed on your system.
+
+### Steps to Run the System
+
+#### 1. Build the Docker Images
+- **API**:
+  ```bash
+  docker build -t claim-matching-app_api -f docker/api/Dockerfile .
+  ```
+
+- **Streamlit Interface**:
+  ```bash
+  docker build -t claim-matching-app_streamlit -f docker/docker_streamlit/Dockerfile .
+  ```
+
+#### 2. Run the Docker Containers
+- **API**:
+  ```bash
+  docker run --network=host --ipc=host -p 8000:8000 claim-matching-app_api
+  ```
+
+- **Streamlit Interface**:
+  ```bash
+  docker run --network=host --ipc=host -p 8501:8501 claim-matching-app_streamlit
+  ```
+
+  -  I didn't test the Docker in local mode. First, we need an image from NVIDIA, like `nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04`, and then run the Docker with `--gpus all`. 
+
+#### 3. Access the Interface
+Open your browser and navigate to: [http://localhost:8501/](http://localhost:8501/)
+
+---
+
+
+## 🛠️ Technologies Used
+- **Transformers** (`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`)
+- **Fine-tuned LLM** (`qwen2.5 3B` with LoRA)
+- **PyTorch**
+- **Hugging Face Transformers**
+- **LanceDB** for vector indexing
+- **Docker** for deployment
+- **Langchain** for OpenAI calls
+- **PyDantic and FastAPI** 
+- **Streamlit**
+  
+---
+
+## 💡 Future Work
+
+1. **Enhance Data Utilization**: Currently, only the `reviewed claim` column is used for similarity computation. Future iterations could incorporate additional metadata columns.
+2. **Optimize Model Performance**: Experiment with larger models like `LLama 3.3` or `phi4` for improved classification.
+3. **Streamline Docker Images**: Separate dependencies to reduce image size and improve build times.
+
+---
 
 ## 📧 Contact
-
 For questions or suggestions, feel free to reach out!
+
